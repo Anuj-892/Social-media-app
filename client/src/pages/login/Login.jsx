@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import './Login.css'
 import { Link,useNavigate } from 'react-router-dom'
 import {useAuth} from '../../context/AuthContext'
+import axios from 'axios';
 
 function Login() {
   const {loginUser} = useAuth();
@@ -9,24 +10,22 @@ function Login() {
     email:'',
     password:''
 })
+const [err, setErr] = useState(null)
 const navigate = useNavigate();
 const handleSubmit = async(e) => {
-  e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/login",{
-       headers:{
-         'Content-Type':'application/json',
-       },
-       method:'POST', 
-       body:JSON.stringify(login)
+     e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login",login,{
+      withCredentials:true
     });
-    const data = await response.json();
     setLogin({
       email:'',
       password:''
-  });
-    if(data){
-      loginUser(data)
-      navigate('/feed',{replace:true})
+    });
+    loginUser(response.data)        
+    navigate('/feed',{replace:true})
+    } catch (err) {
+      setErr(err.response.data)
     }
 }
 
@@ -47,6 +46,7 @@ const handleChange = (e) => {
         <input type="email" value={login.email} onChange={handleChange} name='email' placeholder='Email'/>
         <label htmlFor="password"></label>
         <input type="password" value={login.password} onChange={handleChange} name='password' placeholder='Password'/>
+        {err && err}
         <button className='btn btn-primary'>Login</button>
     </form>
     <p>Don't have an account?<Link to={'/register'}>Sign Up</Link></p>

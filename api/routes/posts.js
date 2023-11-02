@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const verifyToken = require('../verifyToken')
+const verifyToken = require('../middleware/verifyToken')
 const {
     getPost,
     getPosts,
@@ -14,18 +14,18 @@ const {
 router.post("/create",verifyToken,createPost)
 
 //UPDATE
-router.put("/:id",verifyToken,updatePost)
+router.put("/:id",updatePost)
 
 
 //DELETE
-router.delete("/:id",verifyToken,deletePost)
+router.delete("/:id",deletePost)
 
 
 //GET POST DETAILS
 router.get("/:id",getPost)
 
 //GET POSTS
-router.get("/",getPosts)
+router.get("/",verifyToken,getPosts)
 
 //GET USER POSTS
 router.get("/user/:userId",getUserPosts)

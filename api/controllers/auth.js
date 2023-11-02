@@ -11,7 +11,7 @@ const register = async(req,res)=>{
         const salt=await bcrypt.genSalt(10)
         const hashedPassword=await bcrypt.hash(password,salt)
         q = 'INSERT INTO USERS(username,email,password) VALUES (?,?,?);'
-        const [response] = await pool.query(q,[username,email,hashedPassword]);
+        await pool.query(q,[username,email,hashedPassword]);
         res.status(200).json("User created");
     }
     catch(err){
@@ -21,6 +21,7 @@ const register = async(req,res)=>{
 
 const login = async (req,res)=>{
     try{
+        
         let q = 'SELECT * FROM USERS WHERE email=?';
         const [exists] = await pool.query(q,[req.body.email]);      
         if(exists.length==0){
@@ -39,7 +40,7 @@ const login = async (req,res)=>{
 }
 const logout = async (req,res)=>{
     try{
-        res.clearCookie("accessToken",{sameSite:"none",secure:true}).status(200).send("User logged out successfully!")
+        res.clearCookie("accessToken",{sameSite:"none",secure:true}).status(200).json("User logged out successfully!")
     }
     catch(err){
         res.status(500).json(err)

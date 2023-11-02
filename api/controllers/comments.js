@@ -1,10 +1,18 @@
-const Comment=require('../models/Comment')
+const moment = require('moment');
+const {pool} = require('../util/db');
 
 const createComment = async (req,res)=>{
+    const {postId} = req.params;
     try{
-        const newComment=new Comment(req.body)
-        const savedComment=await newComment.save()
-        res.status(200).json(savedComment)
+        const q = "INSERT INTO comments(comment, postId, createdAt, userId) VALUES (?, ?, ?, ?);"
+        const values = [
+        req.body.comment,
+        postId,
+        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+        req.userData.id
+        ];
+        await pool.query(q, values);
+        res.status(200).json("Comment has been added");
     }
     catch(err){
         res.status(500).json(err)
@@ -32,9 +40,11 @@ const deleteComment = async (req,res)=>{
 }
 
 const getComments = async (req,res)=>{
+    const {postId} = req.params;
     try{
-        const comments=await Comment.find({postId:req.params.postId})
-        res.status(200).json(comments)
+        let q='SELECT c.*,u.uid AS userId,username,profilePic FROM comments AS c JOIN users AS u ON (u.uid=c.userId) WHERE c.postId=? ORDER BY c.createdAt DESC;'
+        const [response] = await pool.query(q,[postId])
+        res.status(200).json(response)
     }
     catch(err){
         res.status(500).json(err)

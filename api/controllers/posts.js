@@ -3,7 +3,7 @@ const { pool }  = require('../util/db');
 
 const createPost = async (req,res)=>{
     try{
-        console.log(req.userData);
+        // console.log(req.userData);
         const q = "INSERT INTO posts(content, image, createdAt, ownerId) VALUES (?, ?, ?, ?);"
         const values = [
         req.body.content,

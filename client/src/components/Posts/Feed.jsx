@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
 function Feed({post}){
+  const [openComments, setOpenComments] = useState(false)
+  const {user} = useAuth()
   return (
     <div className="feed">
     <div className="head">
@@ -8,7 +11,7 @@ function Feed({post}){
         <div className="profile-photo">
           <img src={post.profilePic} alt={post.username} />
         </div>
-        <div className="ingo">
+        <div className="info">
           <h3>{post.username}</h3>
           <small>{post.createdAt}</small>
         </div>
@@ -18,7 +21,7 @@ function Feed({post}){
         </span>
     </div>
     <div className="photo">
-      <img src={post.image} alt="postImage" />
+      <img src={`./images/${post.image}`} alt="postImage" />
     </div>
 
     <div className="content">
@@ -28,7 +31,7 @@ function Feed({post}){
     <div className="action-buttons">
       <div className="interaction-buttons">
         <span><i className="uil uil-heart"></i></span>
-        <span><i className="uil uil-comment-dots"></i></span>
+        <span style={{cursor:'pointer'}} onClick={()=>setOpenComments(!openComments)}><i className="uil uil-comment-dots"></i></span>
         <span><i className="uil uil-share-alt"></i></span>
       </div>
       <div className="bookmark">
@@ -36,13 +39,23 @@ function Feed({post}){
       </div>
     </div>
 
-    {/* <div className="liked-by">
-      <span><img src="https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3xlbnwwfHwwfHx8MA%3D%3D" alt="" /></span>
-      <span><img src="https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3xlbnwwfHwwfHx8MA%3D%3D" alt="" /></span>
-      <span><img src="https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3xlbnwwfHwwfHx8MA%3D%3D" alt="" /></span>
-      <p>Liked by <b>Ernest Achiever</b> and <b>2,323 others</b></p>
-    </div> */}
-
+    {
+      openComments && (
+        <div>
+      <div style={{display:'flex'}}>
+        <div className="profile-photo">
+          <img src={user.profilePic} alt={user.username} />
+        </div>
+        <form className='create-post' style={{display:'flex'}}>               
+              <input type="text" placeholder={`What's on your mind,${user.username}?`} id='create-post'
+              name='content'/>
+              <button className='btn btn-primary'>Comment</button>
+        </form>
+      </div>
+      <div></div>
+    </div>
+      )
+    }
     {/* <div className="caption">
       <p><b>Lana Rose</b>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa, impedit. <span className="harsh-tag">#lifestyle</span></p>
     </div>

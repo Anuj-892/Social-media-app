@@ -4,11 +4,12 @@ const verifyToken = require('../middleware/verifyToken')
 const {
     getLikes,
     addLike,
+    deleteLike
 } = require('../controllers/likes');
 
 router.post("/:postId",verifyToken,addLike)
 // router.put("/:commentId",verifyToken,updateComment)
-// router.delete("/:commentId",verifyToken,deleteComment)
+router.delete("/:postId",verifyToken,deleteLike)
 router.get("/:postId",getLikes)
 
 

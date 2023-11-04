@@ -1,8 +1,41 @@
 import React, { useState } from 'react'
+import {
+    useQuery,
+    useMutation,
+    useQueryClient
+  } from '@tanstack/react-query'
+  import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
+import { makeRequest } from '../../axios';
 import { useAuth } from '../../context/AuthContext'
+import Comments from './Comments'
 
 function Feed({post}){
   const [openComments, setOpenComments] = useState(false)
+  const [like, setLike] = useState(false)
+  
+  const { isLoading, error, data } = useQuery({    
+    queryKey:['likes',post.pid],queryFn: async() =>{
+      const res = await makeRequest.get(`/likes/${post.pid}`);
+      return res.data;
+    }
+  });
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({  
+    mutationFn:(liked) => {
+      if(!liked) return makeRequest.post(`/likes/${post.pid}`);
+      return makeRequest.delete(`/likes/${post.pid}`);
+   }, 
+     onSuccess: () => {
+       queryClient.invalidateQueries("likes")
+     },
+  })
+
+  const handleClick = () => {
+    console.log(data.includes(user.uid));
+    mutation.mutate(data.includes(user.uid));
+  }
+  
   const {user} = useAuth()
   return (
     <div className="feed">
@@ -30,7 +63,9 @@ function Feed({post}){
 
     <div className="action-buttons">
       <div className="interaction-buttons">
-        <span><i className="uil uil-heart"></i></span>
+        {
+          data&&data.includes(user.uid)?<AiFillHeart style={{color:'red',cursor:'pointer'}} onClick={handleClick} />:<AiOutlineHeart style={{cursor:'pointer'}} onClick={handleClick}/>
+        }{data&&data.length}likes
         <span style={{cursor:'pointer'}} onClick={()=>setOpenComments(!openComments)}><i className="uil uil-comment-dots"></i></span>
         <span><i className="uil uil-share-alt"></i></span>
       </div>
@@ -41,25 +76,9 @@ function Feed({post}){
 
     {
       openComments && (
-        <div>
-      <div style={{display:'flex'}}>
-        <div className="profile-photo">
-          <img src={user.profilePic} alt={user.username} />
-        </div>
-        <form className='create-post' style={{display:'flex'}}>               
-              <input type="text" placeholder={`What's on your mind,${user.username}?`} id='create-post'
-              name='content'/>
-              <button className='btn btn-primary'>Comment</button>
-        </form>
-      </div>
-      <div></div>
-    </div>
+        <Comments postId={post.pid}/>
       )
     }
-    {/* <div className="caption">
-      <p><b>Lana Rose</b>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa, impedit. <span className="harsh-tag">#lifestyle</span></p>
-    </div>
-    <div className="comments text-muted">View all 277 comments</div> */}
   </div>
   )
 }

@@ -4,15 +4,13 @@ const {pool} = require('../util/db');
 const addLike = async (req,res)=>{
     const {postId} = req.params;
     try{
-        const q = "INSERT INTO comments(comment, postId, createdAt, userId) VALUES (?, ?, ?, ?);"
+        const q = "INSERT INTO likes(like_pid,like_uid) VALUES (?, ?);"
         const values = [
-        req.body.comment,
         postId,
-        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
         req.userData.id
         ];
         await pool.query(q, values);
-        res.status(200).json("Comment has been added");
+        res.status(200).json("Like added");
     }
     catch(err){
         res.status(500).json(err)
@@ -29,22 +27,28 @@ const addLike = async (req,res)=>{
 //     }
 // }
 
-// const deleteComment = async (req,res)=>{
-//     try{
-//         await Comment.findByIdAndDelete(req.params.id)        
-//         res.status(200).json("Comment has been deleted!")
-//     }
-//     catch(err){
-//         res.status(500).json(err)
-//     }
-// }
+const deleteLike = async (req,res)=>{
+    const {postId} = req.params;
+    try{
+        const q = "DELETE FROM likes WHERE like_pid=? AND like_uid= ?;"
+        const values = [
+        postId,
+        req.userData.id
+        ];
+        await pool.query(q, values);
+        res.status(200).json("Like DELETED");
+    }
+    catch(err){
+        res.status(500).json(err)
+    } 
+ }
 
 const getLikes = async (req,res)=>{
     const {postId} = req.params;
-    try{
-        let q='SELECT l.*,u.uid AS userId,username,profilePic FROM likes AS l JOIN users AS u ON (u.uid=l.like_uid) WHERE l.like_pid=?;'
+    try{        
+        let q='SELECT like_uid FROM likes WHERE likes.like_pid=?;'
         const [response] = await pool.query(q,[postId])
-        res.status(200).json(response)
+        res.status(200).json(response.map(like=>like.like_uid))
     }
     catch(err){
         res.status(500).json(err)
@@ -55,5 +59,5 @@ module.exports = {
     getLikes,
     addLike,
     // updateComment,
-    // deleteComment
+    deleteLike
 }

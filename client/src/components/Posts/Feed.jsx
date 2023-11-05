@@ -8,6 +8,7 @@ import {
 import { makeRequest } from '../../axios';
 import { useAuth } from '../../context/AuthContext'
 import Comments from './Comments'
+import { Link } from 'react-router-dom';
 
 function Feed({post}){
   const [openComments, setOpenComments] = useState(false)
@@ -32,7 +33,6 @@ function Feed({post}){
   })
 
   const handleClick = () => {
-    console.log(data.includes(user.uid));
     mutation.mutate(data.includes(user.uid));
   }
   
@@ -45,7 +45,7 @@ function Feed({post}){
           <img src={post.profilePic} alt={post.username} />
         </div>
         <div className="info">
-          <h3>{post.username}</h3>
+          <Link to={`/profile/${post.ownerId}`}><h3>{post.username}</h3></Link>
           <small>{post.createdAt}</small>
         </div>
       </div>

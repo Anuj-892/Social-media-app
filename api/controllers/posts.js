@@ -51,10 +51,15 @@ const getPost = async (req,res)=>{
     }
 }
 
-const getPosts = async (req,res)=>{  
+const getPosts = async (req,res)=>{
+    const {userId} = req.query;  
+    // console.log(userId!='undefined');
     try{
-        let q='SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) LEFT JOIN connections AS c ON (p.ownerId=c.followed_uid) WHERE c.follower_uid=? OR p.ownerId=? ORDER BY p.createdAt DESC;'
-        const [response] = await pool.query(q,[req.userData.id,req.userData.id])
+        let q=userId!='undefined'?'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) WHERE p.ownerId=?':'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) LEFT JOIN connections AS c ON (p.ownerId=c.followed_uid) WHERE c.follower_uid=? OR p.ownerId=? ORDER BY p.createdAt DESC;'
+        // console.log(q);
+        const values = userId!='undefined'? [userId]:[req.userData.id,req.userData.id];
+        // console.log(values);
+        const [response] = await pool.query(q,values)
         res.status(200).json(response)
     }
     catch(err){

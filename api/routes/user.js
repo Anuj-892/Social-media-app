@@ -7,7 +7,6 @@ const {getUsers,
     deleteUser} = require('../controllers/user');
 
 
-    router.get("/",getUsers)
 // //UPDATE
 // router.put("/:id",verifyToken,updateUser)
 
@@ -17,7 +16,7 @@ const {getUsers,
 
 
 // //GET USER
-// router.get("/:id",getUser)
+router.get("/find/:userId",getUser)
 
 
 

@@ -1,7 +1,3 @@
-// const User=require('../models/User')
-// const Post=require('../models/Post')
-// const Comment=require('../models/Comment')
-// const bcrypt=require('bcrypt')
 const {pool} = require('../util/db')
 
 const getUsers = async (req,res)=>{
@@ -17,16 +13,18 @@ const getUsers = async (req,res)=>{
     }
 }
 
-// const getUser = async (req,res)=>{
-//     try{
-//         const user=await User.findById(req.params.id)
-//         const {password,...info}=user._doc
-//         res.status(200).json(info)
-//     }
-//     catch(err){
-//         res.status(500).json(err)
-//     }
-// }
+const getUser = async (req,res)=>{
+    const {userId} = req.params;
+    try{        
+        let q='SELECT * FROM users WHERE users.uid=?;'
+        const [response] = await pool.query(q,[userId])
+        const {password,...others} = response[0]
+        res.status(200).json(others)
+    }
+    catch(err){
+        res.status(500).json(err)
+    }
+}
 
 // const updateUser = async (req,res)=>{
 //     try{
@@ -57,7 +55,7 @@ const getUsers = async (req,res)=>{
 // }
 
 module.exports={
-    getUsers,
+    getUser,
     // updateUser,
     // deleteUser
 

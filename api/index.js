@@ -21,12 +21,14 @@ const userRoute=require('./routes/user')
 const postRoute=require('./routes/posts')
 const likesRoute=require('./routes/likes')
 const commentsRoute=require('./routes/comments')
+const connectionsRoute=require('./routes/connections')
 
 app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
 app.use("/api/posts",postRoute)
 app.use("/api/comments",commentsRoute)
 app.use("/api/likes",likesRoute)
+app.use("/api/connections",connectionsRoute)
 
 const storage=multer.diskStorage({
     destination:(req,file,fn)=>{

@@ -1,5 +1,5 @@
 import LeftBar from "../../components/LeftBar/LeftBar"
-import Posts from "../../components/Posts/Posts"
+import Middle from "../../components//Posts/Middle"
 import RightBar from "../../components/RightBar/RightBar"
 import Navbar from "../../components/navbar/Navbar"
 
@@ -12,7 +12,7 @@ const Home = () => {
       <main>
         <div className="container">
           <LeftBar/>
-          <Posts/>
+          <Middle/>
           <RightBar/>
         </div>
       </main>

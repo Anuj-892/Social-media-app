@@ -1,21 +1,13 @@
-import LeftBar from "../../components/LeftBar/LeftBar"
-import Middle from "../../components//Posts/Middle"
-import RightBar from "../../components/RightBar/RightBar"
-import Navbar from "../../components/navbar/Navbar"
+import Stories from "../../components/stories/Stories"
+import Posts from "../../components/Posts/Posts"
 
 
 
 const Home = () => {
   return (
-    <div>
-      <Navbar/>
-      <main>
-        <div className="container">
-          <LeftBar/>
-          <Middle/>
-          <RightBar/>
-        </div>
-      </main>
+    <div className="home" style={{padding:'5px'}}>
+      <Stories/>
+      <Posts/>
     </div>
   )
 }

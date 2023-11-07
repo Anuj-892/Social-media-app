@@ -2,7 +2,7 @@ import React from 'react'
 import './Posts.css'
 import Story from './Story';
 import CreatePost from './CreatePost';
-import Post from './Post';
+import Post from './Posts';
 function Posts() {
   return (
     <div className="middle">

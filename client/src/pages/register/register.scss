@@ -1,0 +1,97 @@
+.register {
+    height: 100vh;
+    background: rgb(193, 190, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .card {
+        width: 50%;
+        display: flex;
+        background-color: white;
+        flex-direction: row-reverse;
+        border-radius: 50px;
+        height: 500px;
+
+        .left{
+            // border-radius: 20px;
+            background: rgb(110, 5, 239);
+            height: 100%;
+            flex: 1;
+            border-radius: 0px 50px 50px 0px;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            
+            h1 {
+                font-size: 3rem;
+                line-height: 100px;
+            }
+
+            a {
+                color: white;
+                margin-left: 5px;
+                &:hover{
+                    color: rgb(5, 239, 239);
+                    text-decoration: underline;
+                }
+            }
+        }
+        .right{
+            height: 100%;
+            // position: relative;
+            // top: 30px;
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                // background-color: red;
+
+                input {
+                 font-size: 1rem;
+                 border: none;
+                 padding: 1.1rem;
+                 border-bottom: 1px solid lightgray;
+                 padding: 20px 10px;
+                }
+
+                button{
+                width: 50%;
+                padding: 10px;
+                border: none;
+                background-color: rgb(110, 5, 239);
+                color: white;
+                font-weight: bold;
+                font-size:1rem;
+                cursor: pointer;
+                border-radius:2rem;
+                transition: all 0.3s ease;
+
+                  &:hover {
+                      background-color: rgb(159, 129, 243) 
+                  }
+                }
+    ;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .register {
+        .card {
+            .left {
+                background-color: red;
+                display: none;
+            }
+        }
+    }
+}

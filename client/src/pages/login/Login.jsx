@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import './Login.css'
+import './login.scss';
 import { Link,useNavigate } from 'react-router-dom'
 import {useAuth} from '../../context/AuthContext'
 import axios from 'axios';
@@ -23,7 +23,7 @@ const handleSubmit = async(e) => {
       password:''
     });
     loginUser(response.data)        
-    navigate('/feed',{replace:true})
+    navigate('/home',{replace:true})
     } catch (err) {
       setErr(err.response.data)
     }
@@ -37,20 +37,25 @@ const handleChange = (e) => {
     }));
   };
   return (
-    <div className="login-container">
-    <div className='login'>
-    <h1>Connect</h1>
-
-    <form onSubmit={handleSubmit}>
-        <label htmlFor="email"></label>
-        <input type="email" value={login.email} onChange={handleChange} name='email' placeholder='Email'/>
-        <label htmlFor="password"></label>
-        <input type="password" value={login.password} onChange={handleChange} name='password' placeholder='Password'/>
-        {err && err}
-        <button className='btn btn-primary'>Login</button>
-    </form>
-    <p>Don't have an account?<Link to={'/register'}>Sign Up</Link></p>
-</div>
+    <div className="login">
+    <div className='card'>
+      <div className="left">
+        <h1>Connect</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum eos cumque reiciendis eligendi! Expedita distinctio dolores recusandae? Laboriosam iusto eveniet numquam, veritatis inventore distinctio sequi. In recusandae inventore alias hic!</p>
+        <span>Don't have an account?<Link to={'/register'}>Sign Up</Link></span>
+      </div>
+      <div className="right">
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email"></label>
+          <input type="email" value={login.email} onChange={handleChange} name='email' placeholder='Email'/>
+          <label htmlFor="password"></label>
+          <input type="password" value={login.password} onChange={handleChange} name='password' placeholder='Password' />
+          {err && err}
+          <button className='btn btn-primary'>Login</button>
+        </form>
+      </div>
+   </div>
 </div>
   )
 }

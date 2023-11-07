@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import './comments.scss'
 import {
     useQuery,
     useMutation,
@@ -44,27 +45,21 @@ const handleSubmit = async(e) => {
 //   };
 
   return (
-    <div>
-      <div style={{display:'flex'}}>
-        <div className="profile-photo">
-          <img src={user.profilePic} alt={user.username} />
+     <div className='comments'>
+        <div className="write">
+           <img src={user.profilePic} alt={user.username} />
+           <input type="text" placeholder='Write a comment'
+              onChange={(e)=>setComment(e.target.value)} value={comment}/>
+            <button>Comment</button>
         </div>
-        <form className='create-post' style={{display:'flex'}} onSubmit={handleSubmit}>               
-              <input type="text" placeholder={`What's on your mind,${user.username}?`} id='create-comment'
-              name='comment' onChange={(e)=>setComment(e.target.value)} value={comment}/>
-              <button className='btn btn-primary'>Comment</button>
-        </form>
+        {
+            error?'Someting went wrong':
+            isLoading?"Loading...":
+          data.map(comment=>{
+              return <Comment comment={comment} key={comment.cid}/>
+            })
+          }
       </div>
-      <div className='comments'>
-      {
-          error?'Someting went wrong':
-          isLoading?"Loading...":
-         data.map(comment=>{
-            return <Comment comment={comment} key={comment.cid}/>
-          })
-        }
-      </div>
-    </div>
   )
 }
 

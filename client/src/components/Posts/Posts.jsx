@@ -1,11 +1,12 @@
-import React from 'react'
-import Feed from './Feed';
+import React from 'react';
+import './posts.scss'
 import {
   useQuery
 } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
+import Post from '../Post/Post';
 
-function Post({userId}) {
+function Posts({userId}) {
     const { isLoading, error, data } = useQuery({
         queryKey:['posts'],queryFn: async() =>{
           const res = await makeRequest.get(`/posts?userId=${userId}`);
@@ -13,16 +14,16 @@ function Post({userId}) {
         }
       });
   return (
-    <div className="feeds">
+    <div className="posts">
         {
           error?'Someting went wrong':
           isLoading?"Loading...":
          data.map(post=>{
-            return <Feed post={post} key={post.pid}/>
+            return <Post post={post} key={post.pid}/>
           })
         }
       </div>
   )
 }
 
-export default Post
+export default Posts

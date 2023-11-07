@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import {Link,useNavigate} from 'react-router-dom'
-import './Register.css'
+import './register.scss'
 import axios from 'axios'
 
 function Register() {
@@ -34,11 +34,17 @@ function Register() {
       };
 
   return (
-    <div className="register-container">
-        <div className='register'>
-        <h1>Connect</h1>
+    <div className="register">
+        <div className='card'>
+          <div className="left">
+            <h1>Connect</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum eos cumque reiciendis eligendi! Expedita distinctio dolores recusandae? Laboriosam iusto eveniet numquam, veritatis inventore distinctio sequi. In recusandae inventore alias hic!</p>
+            <p>Already have an account?<Link to={'/'}>Login</Link></p>
+        </div>
 
-        <form onSubmit={handleSubmit}>
+        <div className="right">
+          <h1>Register</h1>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="username"></label>
             <input type="text" value={register.username} onChange={handleChange} name='username' placeholder='Username'/>
             <label htmlFor="email"></label>
@@ -48,7 +54,7 @@ function Register() {
             {err && err}
             <button className='btn btn-primary'>Sign Up</button>
         </form>
-        <p>Already have an account?<Link to={'/'}>Login</Link></p>
+        </div>       
     </div>
     </div>
   )

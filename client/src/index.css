@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
     --color-white:hsl(252,30%,100%);
@@ -33,12 +33,10 @@
 
 body {
 font-family: "Poppins",sans-serif;
-color: var(--color-dark);
-background: var(--color-light);
 overflow-x: hidden;
 }
 
-.container {
+/*.container {
     width: 80%;
     margin: 0 auto;
 }
@@ -92,4 +90,4 @@ main .container {
     grid-template-columns: 18vw auto 20vw;
     column-gap: 2rem;
     position: relative;
-}
+} */

@@ -1,10 +1,15 @@
 import React from 'react'
-import "./Navbar.css"
-import {useNavigate} from 'react-router-dom'
+import "./navbar.scss"
+import {useNavigate,Link} from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import {AiFillHome,AiOutlineSearch,AiOutlineMail} from 'react-icons/ai'
+import {BsFillGrid1X2Fill} from 'react-icons/bs'
+import {MdDarkMode} from 'react-icons/md'
+import {GrNotification} from 'react-icons/gr'
+import {FaUserAlt} from 'react-icons/fa'
 
 function Navbar() {
-    const {logoutUser} = useAuth()
+    const {user,logoutUser} = useAuth()
 
     const navigate = useNavigate();
     const handleLogout = async(e) => {
@@ -25,16 +30,26 @@ function Navbar() {
     }
   return (
     <nav>
-        <div className="container">
-            <h2 className="log">Connect</h2>
-            <div className="search-bar">
-                <i className="uil uil-search"></i>
-                <input type="search" placeholder='Search for creators,inspirations and projects'/>
+        <div className="navbar">
+            <div className="left">
+                <Link to={'/home'} style={{textDecoration:"none"}}>
+                    <span>Connect</span>
+                </Link>
+                <AiFillHome/>
+                <BsFillGrid1X2Fill/>
+                <MdDarkMode/>
+                <div className="search">
+                  <AiOutlineSearch/>
+                  <input type="search" placeholder='Search for creators,inspirations and projects'/>
+                </div>
             </div>
-            <div className="create">
-                <label className='btn btn-primary' htmlFor="create-post">Create</label>
-                <div className="logout profile-photo" onClick={handleLogout}>
-                    <img src="https://plus.unsplash.com/premium_photo-1688740375397-34605b6abe48?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3xlbnwwfHwwfHx8MA%3D%3D" alt="" />
+            <div className="right">
+                <GrNotification/>
+                <AiOutlineMail/>
+                <FaUserAlt/>
+                <div className="user">
+                    <img src={user.profilePic} alt="profile-pic" />
+                    <span>{user.username}</span>
                 </div>
             </div>
         </div>

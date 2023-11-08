@@ -1,8 +1,9 @@
 const express=require('express')
 const router=express.Router()
-// const verifyToken = require('../middleware/verifyToken')
+const verifyToken = require('../middleware/verifyToken')
 const {getUsers,
     getUser,
+    refetchUser,
     updateUser,
     deleteUser} = require('../controllers/user');
 
@@ -17,6 +18,8 @@ const {getUsers,
 
 // //GET USER
 router.get("/find/:userId",getUser)
+
+router.get("/refetch",verifyToken,refetchUser)
 
 
 

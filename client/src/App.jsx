@@ -2,7 +2,7 @@ import { RouterProvider,createBrowserRouter, useNavigate } from "react-router-do
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-// import Profile from "./pages/profile/Profile";
+import Profile from "./pages/profile/Profile";
 import {
   QueryClient,
   QueryClientProvider,
@@ -10,17 +10,26 @@ import {
 import Layout from "./Layout";
 import { useAuth } from "./context/AuthContext";
 import { useEffect } from "react";
+import { makeRequest } from "./axios";
 
 const queryClient = new QueryClient();
 
 const ProtectedRoute = ({children}) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user,loginUser } = useAuth();
 
   useEffect(() => {
     if (!user) {
-      console.log("User is not logged in. Redirecting to login page.");
-      navigate('/');
+      async function fetchData(){
+        try {
+          const res = await makeRequest.get(`/users/refetch`);
+          loginUser(res.data)
+        } catch (error) {
+          console.log(error);
+          if(error.response.status === 401) navigate('/');
+        }
+      }
+      fetchData();
     }
   }, [user, navigate]);
 
@@ -50,13 +59,25 @@ const router = createBrowserRouter([
     {
       index:true,
       element:<Home/>
-    },
-    // {
-    //   path:'profile/:userId',
-    //   element:<Profile/>
-    // }
+    }
   ]
-}])
+},
+  {  
+  path:'/profile/',
+  element:(
+    <ProtectedRoute>
+      <Layout>
+
+      </Layout>
+   </ProtectedRoute>),
+  children:[
+    {
+      path:':userId',
+      element:<Profile/>
+    }
+  ]
+}
+])
 
 function App() {
   return (

@@ -3,7 +3,6 @@ const { pool }  = require('../util/db');
 
 const createPost = async (req,res)=>{
     try{
-        // console.log(req.userData);
         const q = "INSERT INTO posts(content, image, createdAt, ownerId) VALUES (?, ?, ?, ?);"
         const values = [
         req.body.content,
@@ -30,47 +29,39 @@ const updatePost = async (req,res)=>{
 }
 
 const deletePost = async (req,res)=>{
+    const {postId} = req.params;
     try{
-        await Post.findByIdAndDelete(req.params.id)
-        await Comment.deleteMany({postId:req.params.id})
-        res.status(200).json("Post has been deleted!")
+        const q = "DELETE FROM posts WHERE pid=? AND posts.ownerId=?;"
+        const values = [
+        postId,
+        req.userData.id
+        ];
+        await pool.query(q, values);
+        res.status(200).json("Post has been deleted");
     }
-    catch(err){
+    catch(err){        
         res.status(500).json(err)
-    }
+    } 
 }
 
-const getPost = async (req,res)=>{
-    try{
-        let q='SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId);'
-        const [response] = await pool.query(q)
-        console.log(response);
-    }
-    catch(err){
-        res.status(500).json(err)
-    }
-}
+// const getPost = async (req,res)=>{
+//     try{
+//         let q='SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId);'
+//         const [response] = await pool.query(q)
+//         console.log(response);
+//     }
+//     catch(err){
+//         res.status(500).json(err)
+//     }
+// }
 
 const getPosts = async (req,res)=>{
     const {userId} = req.query;  
-    // console.log(userId!='undefined');
     try{
-        let q=userId!='undefined'?'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) WHERE p.ownerId=?':'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) LEFT JOIN connections AS c ON (p.ownerId=c.followed_uid) WHERE c.follower_uid=? OR p.ownerId=? ORDER BY p.createdAt DESC;'
-        // console.log(q);
+        let q=userId!='undefined'?'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) WHERE p.ownerId=?ORDER BY p.createdAt DESC;':'SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId) LEFT JOIN connections AS c ON (p.ownerId=c.followed_uid) WHERE c.follower_uid=? OR p.ownerId=? ORDER BY p.createdAt DESC;'
         const values = userId!='undefined'? [userId]:[req.userData.id,req.userData.id];
-        // console.log(values);
         const [response] = await pool.query(q,values)
         res.status(200).json(response)
-    }
-    catch(err){
-        res.status(500).json(err)
-    }
-}
-
-const getUserPosts = async (req,res)=>{
-    try{
-        const posts=await Post.find({userId:req.params.userId})
-        res.status(200).json(posts)
     }
     catch(err){
         res.status(500).json(err)
@@ -80,7 +71,6 @@ const getUserPosts = async (req,res)=>{
 module.exports = {
     getPost,
     getPosts,
-    getUserPosts,
     updatePost,
     deletePost,
     createPost

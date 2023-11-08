@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 import Post from '../Post/Post';
+import CreatePost from '../createpost/CreatePost';
 
 function Posts({userId}) {
     const { isLoading, error, data } = useQuery({
@@ -15,6 +16,7 @@ function Posts({userId}) {
       });
   return (
     <div className="posts">
+      <CreatePost/>
         {
           error?'Someting went wrong':
           isLoading?"Loading...":

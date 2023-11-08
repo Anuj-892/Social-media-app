@@ -5,7 +5,7 @@ import Posts from "../../components/Posts/Posts"
 
 const Home = () => {
   return (
-    <div className="home" style={{padding:'5px'}}>
+    <div className="home" style={{padding:'10px 40px'}}>
       <Stories/>
       <Posts/>
     </div>

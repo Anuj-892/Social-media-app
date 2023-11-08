@@ -47,10 +47,13 @@ const handleSubmit = async(e) => {
   return (
      <div className='comments'>
         <div className="write">
-           <img src={user.profilePic} alt={user.username} />
+        {
+            user.profilePic? <img src={user.profilePic} alt={user.username} />:
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
+          }
            <input type="text" placeholder='Write a comment'
               onChange={(e)=>setComment(e.target.value)} value={comment}/>
-            <button>Comment</button>
+            <button onClick={handleSubmit}>Comment</button>
         </div>
         {
             error?'Someting went wrong':

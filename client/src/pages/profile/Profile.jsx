@@ -6,8 +6,9 @@ import {
   useMutation,
   useQueryClient
 } from '@tanstack/react-query'
+import './profile.scss'
 import { makeRequest } from '../../axios';
-import Post from '../../components/Posts/Post';
+import Posts from '../../components/Posts/Posts';
 function Profile() {
   const {userId} = useParams();
   const {user} = useAuth()
@@ -38,33 +39,40 @@ function Profile() {
   })
 
   const handleClick = () => {
-    console.log(connectionData);
-    console.log(connectionData.includes(user.uid));
     mutation.mutate(connectionData.includes(user.uid));
   }
   
   return (
-    <div>
+    <>
       {
-        isLoading?"Loading..."
-        :<div>
-          <div>
-            <img src={data.coverPic} alt="cover-pic" />
-          </div>
-          <div>
-            <img src={data.profilePic} alt="profile-pic" />
-      
-            <div>
-              <h2>{data.username}</h2>
-              {
-                user.uid===data.uid?<button className='btn btn-primary' onClick={handleClick}>Update</button>:<button onClick={handleClick} className='btn btn-primary'>{connectionData&&connectionData.includes(user.uid)?"Following":"Follow"}</button>
-              }
-            </div>
-          </div>
-          <Post userId={userId}/>
+        isLoading?"Loading...":
+        <div className='profile'>
+      <div className="images">
+       {
+        data.coverPic?<img src={data.coverPic} alt="cover-pic" className="profilePic"/>:
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="cover-pic" className='cover'/>
+        }
+       {
+        data.profilePic?<img src={data.profilePic} alt="profile-pic" className="profilePic"/>:
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic" className="profilePic"/>
+        }
       </div>
-      }
+      <div className="profileInfo">
+        <h2>{data.username}</h2>
+        <div className="links"></div>
+        <p className='status'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur doloribus quae aperiam omnis eos neque eum voluptatibus perspiciatis ducimus iure</p>
+        {
+                user.uid===data.uid?<button className='btn btn-primary' onClick={handleClick}>Update</button>:<button onClick={handleClick} className='btn btn-primary'>{connectionData&&connectionData.includes(user.uid)?"Following":"Follow"}</button>
+         }       
+      </div>
+      <div style={{padding:'10px 40px'}}>
+        <h2>Your Posts</h2>
+        <br/>
+        <Posts userId={userId}/>   
+      </div> 
     </div>
+      }
+    </>
   )
 }
 

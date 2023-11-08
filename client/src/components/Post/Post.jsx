@@ -13,6 +13,7 @@ import {SlOptions} from 'react-icons/sl'
 import {FaRegCommentDots} from 'react-icons/fa'
 import {BsShareFill} from 'react-icons/bs'
 import './post.scss'
+import moment from 'moment'
 
 function Post({post}){
   const [openComments, setOpenComments] = useState(false)
@@ -46,12 +47,15 @@ function Post({post}){
       <div className="container">
       <div className="user">
         <div className="userInfo">
-          <img src={post.profilePic} alt={post.username} />
+        {
+          post.profilePic?<img src={post.profilePic} alt={post.username} />:
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="post-profilephoto"/>
+          }
           <div className="details">
             <Link to={`/profile/${post.ownerId}`} style={{textDecoration:'none',color:'inherit'}}>
               <h3 className='name'>{post.username}</h3>
             </Link>
-            <span className='date'>{post.createdAt}</span>
+            <span className='date'>{moment(post.createdAt).fromNow()}</span>
           </div>
         </div>
         <SlOptions size={20}/>

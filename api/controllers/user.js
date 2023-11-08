@@ -1,23 +1,23 @@
 const {pool} = require('../util/db')
 
-const getUsers = async (req,res)=>{
-    try{
-        let q = 'SELECT * FROM USERS;'
-        const response = await pool.query(q);
-        // const user=await User.findById(req.params.id)
-        // const {password,...info}=user._doc
-        res.status(200).json(response);
+const getUser = async (req,res)=>{
+    const {userId} = req.params;
+    try{        
+        let q='SELECT * FROM users WHERE users.uid=?;'
+        const [response] = await pool.query(q,[userId])
+        const {password,...others} = response[0]
+        res.status(200).json(others)
     }
     catch(err){
         res.status(500).json(err)
     }
 }
 
-const getUser = async (req,res)=>{
-    const {userId} = req.params;
+const refetchUser = async(req,res) => {
+    const {id} = req.userData;
     try{        
         let q='SELECT * FROM users WHERE users.uid=?;'
-        const [response] = await pool.query(q,[userId])
+        const [response] = await pool.query(q,[id])
         const {password,...others} = response[0]
         res.status(200).json(others)
     }
@@ -56,6 +56,7 @@ const getUser = async (req,res)=>{
 
 module.exports={
     getUser,
+    refetchUser
     // updateUser,
     // deleteUser
 

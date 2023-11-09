@@ -77,3 +77,9 @@
         }
     }
 }
+
+@media screen and (max-width:879px) {
+    .rightBar {
+        display: none;
+    }
+}

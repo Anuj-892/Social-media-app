@@ -12,7 +12,7 @@ const {
 router.post("/create",verifyToken,createPost)
 
 //UPDATE
-router.put("/:postId",updatePost)
+router.put("/:postId",verifyToken,updatePost)
 
 
 //DELETE

@@ -1,0 +1,68 @@
+.deleteAccount {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    height: 100%;
+    width: 100vw;
+    background-color: rgb(10, 10, 10);
+    opacity: 0.8;
+    overflow: hidden;
+
+    .card {
+        position: sticky;
+        top: 200px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 5px;
+        background-color: white;
+        width: 50vw;
+        min-height: 30vh;
+        margin: auto;
+        opacity: 20000;
+        padding: 10px;
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bottom {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            button{
+                width: 100px;
+                padding: 10px;
+                border: none;
+                color: white;
+                font-weight: bold;
+                font-size:1rem;
+                cursor: pointer;
+                border-radius:5px;
+                transition: all 0.3s ease;        
+
+                &.green {
+                    background-color: rgb(17, 239, 5);
+                    
+                  &:hover {
+                    background-color: rgb(76, 246, 88) 
+                  }
+                }
+
+                &.red {
+                    background-color: rgb(239, 5, 5);
+                    
+                  &:hover {
+                    background-color: rgb(240, 76, 61) 
+                  }
+                }
+            }
+        }
+        
+    }
+}

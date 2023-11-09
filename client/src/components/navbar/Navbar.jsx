@@ -36,18 +36,18 @@ function Navbar() {
                 <Link to={'/home'} style={{textDecoration:"none"}}>
                     <span>Connect</span>
                 </Link>
-                <AiFillHome/>
-                <BsFillGrid1X2Fill/>
+                <AiFillHome className='hide'/>
+                <BsFillGrid1X2Fill className='hide'/>
                 <MdDarkMode/>
-                <div className="search">
+                <div className="search search-hide">
                   <AiOutlineSearch/>
-                  <input type="search" placeholder='Search for creators,inspirations and projects'/>
+                  <input  type="search" placeholder='Search for creators,inspirations and projects'/>
                 </div>
             </div>
             <div className="right">
-                <GrNotification/>
-                <AiOutlineMail/>
-                <FaUserAlt/>
+                <GrNotification className='hide'/>
+                <AiOutlineMail className='hide'/>
+                <FaUserAlt className='hide'/>
                 <div className="user">
                     {
                       user.profilePic?<img src={user.profilePic} alt="profile-pic"/>:

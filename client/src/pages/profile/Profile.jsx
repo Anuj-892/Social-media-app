@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {useParams} from 'react-router-dom'
 import {useAuth} from '../../context/AuthContext'
 import {
@@ -7,10 +7,17 @@ import {
   useQueryClient
 } from '@tanstack/react-query'
 import './profile.scss'
+import {AiFillDelete} from 'react-icons/ai'
 import { makeRequest } from '../../axios';
 import Posts from '../../components/Posts/Posts';
+import UpdateAccount from '../../components/updateAccount/updateAccount'
+import DeleteAccount from '../../components/deleteAccount/DeleteAccount'
+
+
 function Profile() {
   const {userId} = useParams();
+  const [openModal,setOpenModal] = useState(false)
+  const [openDeleteModal,setOpenDeleteModal] = useState(false)
   const {user} = useAuth()
   const { isLoading, error, data } = useQuery({    
     queryKey:['user'],queryFn: async() =>{
@@ -61,11 +68,18 @@ function Profile() {
         <h2>{data.username}</h2>
         <div className="links"></div>
         <p className='status'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur doloribus quae aperiam omnis eos neque eum voluptatibus perspiciatis ducimus iure</p>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         {
-                user.uid===data.uid?<button className='btn btn-primary' onClick={handleClick}>Update</button>:<button onClick={handleClick} className='btn btn-primary'>{connectionData&&connectionData.includes(user.uid)?"Following":"Follow"}</button>
-         }       
+                user.uid===data.uid?<button className='btn btn-primary' onClick={()=>setOpenModal(true)}>Update</button>:<button onClick={handleClick} className='btn btn-primary'>{connectionData&&connectionData.includes(user.uid)?"Following":"Follow"}</button>
+         }     
+         {
+          user.uid==userId?<AiFillDelete color='red' size={25} style={{cursor:'pointer'}} onClick={()=>setOpenDeleteModal(true)}/> :<></>
+         } 
+        </div>
+         {openModal&&<UpdateAccount setOpenModal={setOpenModal}/>}
+         {openDeleteModal&&<DeleteAccount userId={userId} setOpenDeleteModal={setOpenDeleteModal}/>}
       </div>
-      <div style={{padding:'10px 40px'}}>
+      <div className='userPosts'>
         <h2>Your Posts</h2>
         <br/>
         <Posts userId={userId}/>   

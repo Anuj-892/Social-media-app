@@ -20,9 +20,17 @@ const createComment = async (req,res)=>{
 }
 
 const updateComment = async (req,res)=>{
-    try{       
-        const updatedComment=await Comment.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
-        res.status(200).json(updatedComment)
+    const {commentId} = req.params;
+    try{
+        const q = "UPDATE comments SET comment=?, createdAt=? WHERE comments.cid=? AND comments.userId=?;;"
+        const values = [
+        req.body.comment,
+        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+        commentId,
+        req.userData.id
+        ];
+        await pool.query(q, values);
+        res.status(200).json("Comment has been updated");
     }
     catch(err){
         res.status(500).json(err)
@@ -30,11 +38,17 @@ const updateComment = async (req,res)=>{
 }
 
 const deleteComment = async (req,res)=>{
+    const {commentId} = req.params;
     try{
-        await Comment.findByIdAndDelete(req.params.id)        
-        res.status(200).json("Comment has been deleted!")
+        const q = "DELETE FROM comments WHERE comments.cid=? AND comments.userId=?;"
+        const values = [
+        commentId,
+        req.userData.id
+        ];
+        await pool.query(q, values);
+        res.status(200).json("Comment has been deleted");
     }
-    catch(err){
+    catch(err){        
         res.status(500).json(err)
     }
 }

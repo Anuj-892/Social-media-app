@@ -4,21 +4,23 @@ import {
     useMutation,
     useQueryClient
   } from '@tanstack/react-query'
-  import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
+  import {AiOutlineHeart,AiFillHeart,AiFillDelete} from 'react-icons/ai'
 import { makeRequest } from '../../axios';
 import { useAuth } from '../../context/AuthContext'
 import Comments from '../comments/Comments'
 import { Link } from 'react-router-dom';
 import {SlOptions} from 'react-icons/sl'
 import {FaRegCommentDots} from 'react-icons/fa'
-import {BsShareFill} from 'react-icons/bs'
+import {BsShareFill,BsPencilSquare} from 'react-icons/bs'
 import './post.scss'
 import moment from 'moment'
+import UpdatePost from '../updatePost/UpdatePost';
+import DeletePost from '../deletePost/DeletePost';
 
 function Post({post}){
   const [openComments, setOpenComments] = useState(false)
-  // const [like, setLike] = useState(false)
-  
+  const [update, setUpdate] = useState(false)
+  const [deleteEl, setDeleteEl] = useState(false)
   const { isLoading, error, data } = useQuery({    
     queryKey:['likes',post.pid],queryFn: async() =>{
       const res = await makeRequest.get(`/likes/${post.pid}`);
@@ -58,7 +60,14 @@ function Post({post}){
             <span className='date'>{moment(post.createdAt).fromNow()}</span>
           </div>
         </div>
-        <SlOptions size={20}/>
+        {
+          post.ownerId==user.uid?<div className='tools' style={{display:'flex',gap:'3px'}}>
+          <BsPencilSquare color='green' size={20} style={{cursor:'pointer'}} onClick={()=>setUpdate(true)}/>
+          <AiFillDelete color='red' size={20} style={{cursor:'pointer'}} onClick={()=>setDeleteEl(true)}/>
+          </div>:<SlOptions size={20}/>
+        }  
+        {update&&<UpdatePost setUpdate={setUpdate} postInfo={{postId:post.pid,content:post.content,image:post.image}}/>}     
+        {deleteEl&&<DeletePost setDeleteEl={setDeleteEl} postId={post.pid}/>}     
       </div>
 
       <div className="content">
@@ -69,15 +78,15 @@ function Post({post}){
         <div className="item">
           {
             data&&data.includes(user.uid)?<AiFillHeart style={{color:'red',cursor:'pointer'}} onClick={handleClick} />:<AiOutlineHeart style={{cursor:'pointer'}} onClick={handleClick}/>
-          }{data&&data.length}likes
+          }<span>{data&&data.length}likes</span>
         </div>
         <div className="item">
           <FaRegCommentDots onClick={()=>setOpenComments(!openComments)}/>
-          12 comments
+          <span>12 comments</span>
         </div>
         <div className="item">
           <BsShareFill/>
-          Share
+          <span>Share</span>
         </div>
       </div>
     {

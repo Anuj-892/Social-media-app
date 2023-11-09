@@ -56,3 +56,39 @@
         }
     }
 }
+
+@media screen and (max-width:1086px) {
+    .navbar {
+        .hide {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width:866px) {
+    .navbar {
+        .left {
+            .search-hide{
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:450px) {
+    .navbar {
+        .left {
+            span{
+                font-size: 19px;   
+            }
+        }
+
+        .right {
+            .user {
+                span {
+                    font-size: 17px; 
+                }
+            }
+        }
+    }
+}

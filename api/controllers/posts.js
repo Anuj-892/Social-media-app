@@ -19,11 +19,22 @@ const createPost = async (req,res)=>{
 }
 
 const updatePost = async (req,res)=>{
-    try{       
-        const updatedPost=await Post.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
-        res.status(200).json(updatedPost)
+    const {postId} = req.params;
+    console.log(postId,req.body.content,req.body.image);
+    try{
+        const q = "UPDATE posts SET content=?, image=?, createdAt=? WHERE ownerId=? AND pid=?;"
+        const values = [
+        req.body.content,
+        req.body.image,
+        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+        req.userData.id,
+        postId
+        ];
+        console.log(values);
+        await pool.query(q, values);
+        res.status(200).json("Post has been edited");
     }
-    catch(err){
+    catch(err){        
         res.status(500).json(err)
     }
 }
@@ -31,7 +42,7 @@ const updatePost = async (req,res)=>{
 const deletePost = async (req,res)=>{
     const {postId} = req.params;
     try{
-        const q = "DELETE FROM posts WHERE pid=? AND posts.ownerId=?;"
+        const q = "DELETE FROM posts WHERE posts.pid=? AND posts.ownerId=?;"
         const values = [
         postId,
         req.userData.id
@@ -43,17 +54,6 @@ const deletePost = async (req,res)=>{
         res.status(500).json(err)
     } 
 }
-
-// const getPost = async (req,res)=>{
-//     try{
-//         let q='SELECT p.*,u.uid AS userId,username,profilePic FROM posts AS p JOIN users AS u ON (u.uid=p.ownerId);'
-//         const [response] = await pool.query(q)
-//         console.log(response);
-//     }
-//     catch(err){
-//         res.status(500).json(err)
-//     }
-// }
 
 const getPosts = async (req,res)=>{
     const {userId} = req.query;  
@@ -69,7 +69,6 @@ const getPosts = async (req,res)=>{
 }
 
 module.exports = {
-    getPost,
     getPosts,
     updatePost,
     deletePost,

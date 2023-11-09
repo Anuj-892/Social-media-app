@@ -41,3 +41,23 @@
         }
     }
 }
+
+@media screen and (max-width:725px) {
+  .leftBar {
+    flex: 0.2;
+    .container {
+      padding: 10px;
+      .menu {
+        .user span,.item span {
+           display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:400px) {
+  .leftBar {
+    display: none;
+  }
+}

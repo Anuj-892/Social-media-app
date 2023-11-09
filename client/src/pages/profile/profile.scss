@@ -23,7 +23,7 @@
 
     .profileInfo {
         margin: 30px 0px 2px 0px;
-        padding: 10px 40px;
+        padding: 10px 30px;
 
         button{
             width: 100px;
@@ -42,5 +42,29 @@
                   background-color: rgb(159, 129, 243) 
               }
             }
+    }
+
+    .userPosts {
+        padding: 10px 40px;
+    }
+}
+
+@media screen and (max-width:455px) {
+    .profile{
+
+        .images {
+           .profilePic {
+            width: 150px;
+           height: 150px;
+           }
+        }
+
+        .profileInfo {
+            padding: 10px 10px;
+        }
+
+        .userPosts {
+            padding: 10px 20px;
+        }
     }
 }

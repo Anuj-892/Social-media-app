@@ -5,8 +5,8 @@ import Posts from "../../components/Posts/Posts"
 
 const Home = () => {
   return (
-    <div className="home" style={{padding:'10px 40px'}}>
-      <Stories/>
+    <div className="home">
+      {/* <Stories/> */}
       <Posts/>
     </div>
   )

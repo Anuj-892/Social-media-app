@@ -6,7 +6,7 @@ import RightBar from './components/RightBar/RightBar'
 
 const Layout = () => {
   return (
-    <div>
+    <div className='layout'>
       <Navbar/>
       <main>
         <div style={{display:'flex'}}>

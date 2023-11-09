@@ -1,19 +1,19 @@
 const express=require('express')
 const router=express.Router()
 const verifyToken = require('../middleware/verifyToken')
-const {getUsers,
+const {
     getUser,
     refetchUser,
     updateUser,
     deleteUser} = require('../controllers/user');
 
 
-// //UPDATE
-// router.put("/:id",verifyToken,updateUser)
+//UPDATE
+router.put("/",verifyToken,updateUser)
 
 
 // //DELETE
-// router.delete("/:id",verifyToken,deleteUser)
+router.delete("/",verifyToken,deleteUser)
 
 
 // //GET USER

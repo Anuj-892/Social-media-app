@@ -8,6 +8,7 @@ import {
   } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 import Comment from './Comment';
+import {AiOutlineSend} from 'react-icons/ai'
 
 function Comments({postId}) {
     const {user} = useAuth();
@@ -35,6 +36,7 @@ const handleSubmit = async(e) => {
     // let imgUrl= await upload();
   // image:postData.file,
     mutation.mutate({comment:comment});
+    setComment("")
   }
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
@@ -53,7 +55,7 @@ const handleSubmit = async(e) => {
           }
            <input type="text" placeholder='Write a comment'
               onChange={(e)=>setComment(e.target.value)} value={comment}/>
-            <button onClick={handleSubmit}>Comment</button>
+            <button onClick={handleSubmit}><AiOutlineSend/></button>
         </div>
         {
             error?'Someting went wrong':

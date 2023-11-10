@@ -8,15 +8,13 @@ import {
 import { makeRequest } from '../../axios';
 
 function UpdatePost({setUpdate,postInfo}) {
-  const [updateData, setUpdateData] = useState({
-    file:postInfo.image,
-    content:postInfo.content,
-})
+    const [file, setFile] = useState(postInfo.image)
+  const [content, setContent] = useState(postInfo.content)
 
 const upload = async()=>{
   try {
     const formData = new FormData();
-    formData.append("file",updateData.file);
+    formData.append("file",file);
     const res = await makeRequest.post("/images",formData)
     return res.data;
   } catch (error) {
@@ -38,17 +36,17 @@ const upload = async()=>{
   const handleSubmit = async(e) => {
     e.preventDefault();
     let imgUrl= "";
-    if(updateData.file) imgUrl= await upload();
-    mutation.mutate({content:updateData.content,image:imgUrl});
+    if(file) imgUrl= await upload();
+    mutation.mutate({content:content,image:imgUrl});
     setUpdate(false);
   }
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdateData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setUpdateData((prev) => ({
+//       ...prev,
+//       [name]: value
+//     }));
+//   };
 
   return (
     <div className='updatePost'>
@@ -58,8 +56,8 @@ const upload = async()=>{
            <AiFillCloseCircle style={{cursor:"pointer"}} size={25} onClick={()=>setUpdate(false)}/>
         </div>
          <div className='bottom'>
-            <input type="text" placeholder='Edit Text..' name='content' value={updateData.content} onChange={handleChange}/>
-            <input type="file" name='file' value={updateData.file} onChange={handleChange}/>
+            <input type="text" placeholder='Edit Text..' name='content' value={content} onChange={(e)=>setContent(e.target.value)}/>
+            <input type="file" name='file' onChange={(e)=>setFile(e.target.files[0])}/>
 
             <button onClick={handleSubmit}>Update</button>
          </div>

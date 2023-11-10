@@ -18,10 +18,10 @@ function LeftBar() {
             <div className="menu">
                 <div className="user">
                 {
-                      user.profilePic?<img src={user.profilePic} alt="profile-pic"/>:
+                      user.profilePic?<img src={`http://localhost:5000/uploads/${user.profilePic}`} alt="profile-pic"/>:
                       <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
                     }
-                <span>{user.username}</span>
+                <span><Link to={`/profile/${user.uid}`}>{user.username}</Link></span>
                 </div>
         <div className="item">
             <AiFillHome size={25}/>

@@ -10,17 +10,17 @@ import { useAuth } from '../../context/AuthContext'
 
 function UpdateAccount({setOpenModal}) {
     const {user,loginUser} = useAuth();
+    const [profilePic, setProfilePic] = useState(user.profilePic)
+    const [coverPic, setCoverPic] = useState(user.coverPic)
     const [updateAccount, setUpdateAccount] = useState({
-        profilePic:user.profilePic,
-        coverPic:user.coverPic,
         username:user.username,
         email:user.email
     })
-    console.log('hey');
-    const upload = async()=>{
+
+    const upload = async(pic)=>{
       try {
         const formData = new FormData();
-        formData.append("file",updateAccount.profilePic);
+        formData.append("file",pic);
         const res = await makeRequest.post("/images",formData)
         return res.data;
       } catch (error) {
@@ -48,10 +48,12 @@ function UpdateAccount({setOpenModal}) {
     
       const handleSubmit = async(e) => {
         e.preventDefault();
-        let imgUrl= "";
-        if(updateAccount.profilePic) imgUrl= await upload();
-        console.log({username:updateAccount.username,email:updateAccount.email,profilePic:imgUrl,coverPic:updateAccount.coverPic,});
-        mutation.mutate({username:updateAccount.username,email:updateAccount.email,profilePic:imgUrl,coverPic:updateAccount.coverPic,});
+        let profile= "";
+        let cover="";
+        if(profilePic) profile= await upload(profilePic);
+        if(coverPic) cover=await upload(coverPic);
+        // console.log({username:updateAccount.username,email:updateAccount.email,profilePic:imgUrl,coverPic:updateAccount.coverPic,});
+        mutation.mutate({username:updateAccount.username,email:updateAccount.email,profilePic:profile,coverPic:cover});
         setOpenModal(false);
       }
       const handleChange = (e) => {
@@ -73,8 +75,8 @@ function UpdateAccount({setOpenModal}) {
          <div className='bottom'>
             <input type="text" placeholder='Username' name='username' value={updateAccount.username} onChange={handleChange}/>
             <input type="email" placeholder='Email' name='email' value={updateAccount.email} onChange={handleChange}/>
-            <input type="file" name='profilePic' value={updateAccount.profilePic} onChange={handleChange}/>
-            <input type="file" name='coverPic' value={updateAccount.coverPic} onChange={handleChange}/>
+            <input type="file" name='profilePic' onChange={(e)=>setProfilePic(e.target.files[0])}/>
+            <input type="file" name='coverPic' onChange={(e)=>setCoverPic(e.target.files[0])}/>
 
             <button onClick={handleSubmit}>Update</button>
          </div>

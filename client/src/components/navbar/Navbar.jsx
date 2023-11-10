@@ -2,7 +2,7 @@ import React from 'react'
 import "./navbar.scss"
 import {useNavigate,Link} from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import {AiFillHome,AiOutlineSearch,AiOutlineMail} from 'react-icons/ai'
+import {AiFillHome,AiOutlineSearch,AiOutlineMail,AiOutlineLogout} from 'react-icons/ai'
 import {BsFillGrid1X2Fill} from 'react-icons/bs'
 import {BiSolidUserCircle} from 'react-icons/bi'
 import {MdDarkMode} from 'react-icons/md'
@@ -48,13 +48,14 @@ function Navbar() {
                 <GrNotification className='hide'/>
                 <AiOutlineMail className='hide'/>
                 <FaUserAlt className='hide'/>
-                <div className="user">
+                {/* <div className="user">
                     {
                       user.profilePic?<img src={user.profilePic} alt="profile-pic"/>:
                       <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
                     }
                     <span>{user.username}</span>
-                </div>
+                </div> */}
+                <button onClick={handleLogout}><AiOutlineLogout size={18}/></button>
             </div>
         </div>
     </nav>

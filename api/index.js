@@ -10,7 +10,7 @@ app.use((req,res,next)=>{
   next();
 })
 app.use(express.json())
-// app.use("/images",express.static())
+app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
 app.use(cors({
     origin:"http://localhost:5173",
     credentials:true

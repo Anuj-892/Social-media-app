@@ -72,7 +72,7 @@ function Post({post}){
 
       <div className="content">
          <p>{post.content}</p>
-         <img src={`./images/${post.image}`} alt="postImage" />
+         <img src={`http://localhost:5000/uploads/${post.image}`} alt="postImage" />
       </div>
       <div className="info">
         <div className="item">

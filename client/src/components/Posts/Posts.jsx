@@ -16,7 +16,6 @@ function Posts({userId}) {
       });
   return (
     <div className="posts">
-      <CreatePost/>
         {
           error?'Someting went wrong':
           isLoading?"Loading...":

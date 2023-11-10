@@ -12,6 +12,7 @@ import { makeRequest } from '../../axios';
 import Posts from '../../components/Posts/Posts';
 import UpdateAccount from '../../components/updateAccount/updateAccount'
 import DeleteAccount from '../../components/deleteAccount/DeleteAccount'
+import CreatePost from '../../components/createpost/CreatePost'
 
 
 function Profile() {
@@ -56,11 +57,11 @@ function Profile() {
         <div className='profile'>
       <div className="images">
        {
-        data.coverPic?<img src={data.coverPic} alt="cover-pic" className="profilePic"/>:
+        data.coverPic?<img src={`http://localhost:5000/uploads/${data.coverPic}`} alt="cover-pic" className="profilePic"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="cover-pic" className='cover'/>
         }
        {
-        data.profilePic?<img src={data.profilePic} alt="profile-pic" className="profilePic"/>:
+        data.profilePic?<img src={`http://localhost:5000/uploads/${data.profilePic}`} alt="profile-pic" className="profilePic"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic" className="profilePic"/>
         }
       </div>
@@ -82,6 +83,7 @@ function Profile() {
       <div className='userPosts'>
         <h2>Your Posts</h2>
         <br/>
+        {(userId==user.uid) && <CreatePost/>}
         <Posts userId={userId}/>   
       </div> 
     </div>

@@ -1,5 +1,4 @@
 const {pool} = require('../util/db')
-const moment = require('moment/moment');
 
 const getUser = async (req,res)=>{
     const {userId} = req.params;
@@ -8,6 +7,20 @@ const getUser = async (req,res)=>{
         const [response] = await pool.query(q,[userId])
         const {password,...others} = response[0]
         res.status(200).json(others)
+    }
+    catch(err){
+        res.status(500).json(err)
+    }
+}
+
+const getUsers = async (req,res)=>{
+    try{        
+        let q='SELECT uid, username, email,profilePic FROM users;'
+        const [response] = await pool.query(q);
+        let newData = response.filter((user)=>{
+            return user.uid != req.userData.id;
+        })
+        res.status(200).json(newData)
     }
     catch(err){
         res.status(500).json(err)
@@ -27,10 +40,7 @@ const refetchUser = async(req,res) => {
     }
 }
 
-const updateUser = async (req,res)=>{
-    // let profilePic = Boolean(req.body.profilePic)?req.body.profilePic:"";
-
-    // let coverPic = Boolean(req.body.coverPic)?req.body.coverPic:"";   
+const updateUser = async (req,res)=>{   
     try{
         const q = "UPDATE users SET username=?, profilePic=?, coverPic=?, email=? WHERE users.uid=?;";
         const values = [
@@ -66,6 +76,7 @@ const deleteUser = async (req,res)=>{
 }
 
 module.exports={
+    getUsers,
     getUser,
     refetchUser,
     updateUser,

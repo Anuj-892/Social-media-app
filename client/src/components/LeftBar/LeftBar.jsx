@@ -18,7 +18,7 @@ function LeftBar() {
             <div className="menu">
                 <div className="user">
                 {
-                      user.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${user.profilePic}`} alt="profile-pic"/>:
+                      user.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${user.profilePic}`} alt="profile-pic"/>:
                       <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
                     }
                 <span><Link to={`/profile/${user.uid}`}>{user.username}</Link></span>

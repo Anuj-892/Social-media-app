@@ -15,7 +15,7 @@ function Navbar() {
     const handleLogout = async(e) => {
         try {
             e.preventDefault();
-        const response = await fetch(`${import.meta.env.VITE_SERVER_PORT_URL}api/auth/logout`,{
+        const response = await fetch(`${import.meta.env.VITE_SERVER_PORT_URL}/api/auth/logout`,{
         method:'POST', 
         credentials: 'include'
         });

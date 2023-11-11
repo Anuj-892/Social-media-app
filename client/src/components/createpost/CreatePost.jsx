@@ -51,7 +51,7 @@ const handleChange = (e) => {
     <div className='create-post' >          
             <div className='top'>
              {
-              user.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${user.profilePic}`} alt={user.username} />:
+              user.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${user.profilePic}`} alt={user.username} />:
               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="post-profilephoto"/>
               } 
               

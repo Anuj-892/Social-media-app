@@ -41,6 +41,7 @@ const upload = async()=>{
     setUpdate(false);
   }
 
+
   return (
     <div className='updatePost'>
       <div className='card'>

@@ -10,7 +10,7 @@ import { makeRequest } from '../../axios';
 import Comment from './Comment';
 import {AiOutlineSend} from 'react-icons/ai'
 
-function Comments({postId}) {
+function Comments({postId,setCommentVal}) {
     const {user} = useAuth();
     const [comment, setComment] = useState("")
     const { isLoading, error, data } = useQuery({
@@ -21,7 +21,9 @@ function Comments({postId}) {
       });
 
       const queryClient = useQueryClient();
-
+   if(data){
+    setCommentVal(data.length)
+   }
 const mutation = useMutation({  
   mutationFn:(newComment) => {
     return makeRequest.post(`/comments/${postId}/create`,newComment)
@@ -42,7 +44,7 @@ const handleSubmit = async(e) => {
      <div className='comments'>
         <div className="write">
         {
-            user.profilePic? <img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${user.profilePic}`} alt={user.username} />:
+            user.profilePic? <img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${user.profilePic}`} alt={user.username} />:
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
           }
            <input type="text" placeholder='Write a comment'

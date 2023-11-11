@@ -57,11 +57,11 @@ function Profile() {
         <div className='profile'>
       <div className="images">
        {
-        data.coverPic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${data.coverPic}`} alt="cover-pic" className="cover"/>:
+        data.coverPic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${data.coverPic}`} alt="cover-pic" className="cover"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="cover-pic" className='cover'/>
         }
        {
-        data.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${data.profilePic}`} alt="profile-pic" className="profilePic"/>:
+        data.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${data.profilePic}`} alt="profile-pic" className="profilePic"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic" className="profilePic"/>
         }
       </div>
@@ -81,7 +81,8 @@ function Profile() {
          {openDeleteModal&&<DeleteAccount userId={userId} setOpenDeleteModal={setOpenDeleteModal}/>}
       </div>
       <div className='userPosts'>
-        <h2>Your Posts</h2>
+        {user.uid==userId?<h2>Your Posts</h2>:<h2>{data.username}'s Posts</h2>}
+        
         <br/>
         {(userId==user.uid) && <CreatePost/>}
         <Posts userId={userId}/>   

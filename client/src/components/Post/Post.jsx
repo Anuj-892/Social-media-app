@@ -21,6 +21,7 @@ function Post({post}){
   const [openComments, setOpenComments] = useState(false)
   const [update, setUpdate] = useState(false)
   const [deleteEl, setDeleteEl] = useState(false)
+  const [commentVal, setCommentVal] = useState(0)
   const { isLoading, error, data } = useQuery({    
     queryKey:['likes',post.pid],queryFn: async() =>{
       const res = await makeRequest.get(`/likes/${post.pid}`);
@@ -50,7 +51,7 @@ function Post({post}){
       <div className="user">
         <div className="userInfo">
         {
-          post.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${post.profilePic}`} alt={post.username} />:
+          post.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${post.profilePic}`} alt={post.username} />:
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="post-profilephoto"/>
           }
           <div className="details">
@@ -72,17 +73,17 @@ function Post({post}){
 
       <div className="content">
          <p>{post.content}</p>
-         {post.image && <img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${post.image}`} alt="postImage" />}
+         {post.image && <img src={`${import.meta.env.VITE_SERVER_PORT_URL}/uploads/${post.image}`} alt="postImage" />}
       </div>
       <div className="info">
         <div className="item">
           {
             data&&data.includes(user.uid)?<AiFillHeart style={{color:'red',cursor:'pointer'}} onClick={handleClick} />:<AiOutlineHeart style={{cursor:'pointer'}} onClick={handleClick}/>
-          }<span>{data&&data.length}likes</span>
+          }<span>{data&&data.length} likes</span>
         </div>
         <div className="item">
           <FaRegCommentDots onClick={()=>setOpenComments(!openComments)}/>
-          <span>12 comments</span>
+          <span>{commentVal} comments</span>
         </div>
         <div className="item">
           <BsShareFill/>
@@ -91,7 +92,7 @@ function Post({post}){
       </div>
     {
       openComments && (
-        <Comments postId={post.pid}/>
+        <Comments setCommentVal={setCommentVal} postId={post.pid}/>
       )
     }
       </div>     

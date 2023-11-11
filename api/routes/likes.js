@@ -8,7 +8,6 @@ const {
 } = require('../controllers/likes');
 
 router.post("/:postId",verifyToken,addLike)
-// router.put("/:commentId",verifyToken,updateComment)
 router.delete("/:postId",verifyToken,deleteLike)
 router.get("/:postId",getLikes)
 

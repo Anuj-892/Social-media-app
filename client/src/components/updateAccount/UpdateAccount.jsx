@@ -42,7 +42,6 @@ function UpdateAccount({setOpenModal}) {
         onSuccess: () => {
           helper();
           queryClient.invalidateQueries("user")
-        //   queryClient.invalidateQueries("posts")
         },
       })
     
@@ -52,7 +51,6 @@ function UpdateAccount({setOpenModal}) {
         let cover="";
         if(profilePic) profile= await upload(profilePic);
         if(coverPic) cover=await upload(coverPic);
-        // console.log({username:updateAccount.username,email:updateAccount.email,profilePic:imgUrl,coverPic:updateAccount.coverPic,});
         mutation.mutate({username:updateAccount.username,email:updateAccount.email,profilePic:profile,coverPic:cover});
         setOpenModal(false);
       }

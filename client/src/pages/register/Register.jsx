@@ -14,7 +14,7 @@ function Register() {
     const handleSubmit = async(e) => {
         e.preventDefault()
        try {
-        const data = await axios.post("http://localhost:5000/api/auth/register",register);
+        const data = await axios.post(`${import.meta.env.VITE_SERVER_PORT_URL}api/auth/register`,register);
         setRegister({
             username:'',
             email:'',
@@ -36,13 +36,6 @@ function Register() {
   return (
     <div className="register">
         <div className='card'>
-          <div className="left">
-            <h1>Connect</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum eos cumque reiciendis eligendi! Expedita distinctio dolores recusandae? Laboriosam iusto eveniet numquam, veritatis inventore distinctio sequi. In recusandae inventore alias hic!</p>
-            <p>Already have an account?<Link to={'/'}>Login</Link></p>
-        </div>
-
-        <div className="right">
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
             <label htmlFor="username"></label>
@@ -53,8 +46,8 @@ function Register() {
             <input type="password" value={register.password} onChange={handleChange} name='password' placeholder='Password'/>
             {err && err}
             <button className='btn btn-primary'>Sign Up</button>
-        </form>
-        </div>       
+            <p>Already have an account?<Link to={'/'}>Login</Link></p>
+        </form>      
     </div>
     </div>
   )

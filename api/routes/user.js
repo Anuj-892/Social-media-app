@@ -8,16 +8,11 @@ const {
     updateUser,
     deleteUser} = require('../controllers/user');
 
-
-//UPDATE
 router.put("/",verifyToken,updateUser)
 
-
-// //DELETE
 router.delete("/",verifyToken,deleteUser)
 
 
-// //GET USER
 router.get("/find/:userId",verifyToken,getUser)
 router.get("/",verifyToken,getUsers)
 

@@ -40,13 +40,6 @@ const upload = async()=>{
     mutation.mutate({content:content,image:imgUrl});
     setUpdate(false);
   }
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setUpdateData((prev) => ({
-//       ...prev,
-//       [name]: value
-//     }));
-//   };
 
   return (
     <div className='updatePost'>

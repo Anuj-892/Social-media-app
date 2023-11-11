@@ -8,18 +8,13 @@ const {
     createPost
 } = require('../controllers/posts')
 
-//CREATE
+
 router.post("/create",verifyToken,createPost)
 
-//UPDATE
 router.put("/:postId",verifyToken,updatePost)
 
-
-//DELETE
 router.delete("/:postId",verifyToken,deletePost)
 
-
-//GET POSTS
 router.get("/",verifyToken,getPosts)
 
 

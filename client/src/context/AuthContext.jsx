@@ -1,29 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { makeRequest } from '../axios';
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   // console.log(user,"here again");
-  //   async function fetchData(){
-  //     console.log(user,"here again");
-  //     try {
-  //       const res = await makeRequest.get(`/users/refetch`);
-  //       // console.log(res.data);
-  //       setUser(res.data)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   if (!user) {
-  //     fetchData();
-  //   }
-  // }, [user])
-  
+  const [user, setUser] = useState(null);  
 
   const loginUser = (userData) => {
     setUser(userData);

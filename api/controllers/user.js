@@ -50,10 +50,7 @@ const updateUser = async (req,res)=>{
             req.body.email,
             req.userData.id
         ];
-        console.log(values);
-        const result = await pool.query(q, values);
-        console.log(result);
-        console.log('works');        
+        await pool.query(q, values);      
         res.status(200).json("User has been edited");
     }
     catch(err){        

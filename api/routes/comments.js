@@ -8,18 +8,12 @@ const {
     deleteComment
 } = require('../controllers/comments');
 
-//CREATE
 router.post("/:postId/create",verifyToken,createComment)
 
-//UPDATE
 router.put("/:commentId",verifyToken,updateComment)
 
-
-//DELETE
 router.delete("/:commentId",verifyToken,deleteComment)
 
-
-//GET POST COMMENTS
 router.get("/:postId",getComments)
 
 

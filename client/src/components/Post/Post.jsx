@@ -50,7 +50,7 @@ function Post({post}){
       <div className="user">
         <div className="userInfo">
         {
-          post.profilePic?<img src={post.profilePic} alt={post.username} />:
+          post.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${post.profilePic}`} alt={post.username} />:
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="post-profilephoto"/>
           }
           <div className="details">
@@ -72,7 +72,7 @@ function Post({post}){
 
       <div className="content">
          <p>{post.content}</p>
-         <img src={`http://localhost:5000/uploads/${post.image}`} alt="postImage" />
+         {post.image && <img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${post.image}`} alt="postImage" />}
       </div>
       <div className="info">
         <div className="item">

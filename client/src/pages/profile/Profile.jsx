@@ -21,14 +21,14 @@ function Profile() {
   const [openDeleteModal,setOpenDeleteModal] = useState(false)
   const {user} = useAuth()
   const { isLoading, error, data } = useQuery({    
-    queryKey:['user'],queryFn: async() =>{
+    queryKey:['user',userId],queryFn: async() =>{
       const res = await makeRequest.get(`/users/find/${userId}`);
       return res.data;
     }
   });
 
   const {data:connectionData } = useQuery({    
-    queryKey:['connections'],queryFn: async() =>{
+    queryKey:['connections',userId],queryFn: async() =>{
       const res = await makeRequest.get(`/connections/${userId}`);
       return res.data;
     }
@@ -57,11 +57,11 @@ function Profile() {
         <div className='profile'>
       <div className="images">
        {
-        data.coverPic?<img src={`http://localhost:5000/uploads/${data.coverPic}`} alt="cover-pic" className="profilePic"/>:
+        data.coverPic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${data.coverPic}`} alt="cover-pic" className="cover"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="cover-pic" className='cover'/>
         }
        {
-        data.profilePic?<img src={`http://localhost:5000/uploads/${data.profilePic}`} alt="profile-pic" className="profilePic"/>:
+        data.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${data.profilePic}`} alt="profile-pic" className="profilePic"/>:
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic" className="profilePic"/>
         }
       </div>

@@ -33,24 +33,16 @@ const mutation = useMutation({
 
 const handleSubmit = async(e) => {
     e.preventDefault();
-    // let imgUrl= await upload();
-  // image:postData.file,
     mutation.mutate({comment:comment});
     setComment("")
   }
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setPostData((prev) => ({
-//       ...prev,
-//       [name]: value
-//     }));
-//   };
+
 
   return (
      <div className='comments'>
         <div className="write">
         {
-            user.profilePic? <img src={user.profilePic} alt={user.username} />:
+            user.profilePic? <img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${user.profilePic}`} alt={user.username} />:
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile-pic"/>
           }
            <input type="text" placeholder='Write a comment'

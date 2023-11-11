@@ -1,10 +1,10 @@
+require('dotenv').config();
 const express =require('express');
 const app=express()
 const cors=require('cors')
 const multer=require('multer')
 const cookieParser=require('cookie-parser')
 const path = require('path')
-
 app.use((req,res,next)=>{
   res.header("Access-Control-Allow-Credentials",true);
   next();
@@ -12,7 +12,7 @@ app.use((req,res,next)=>{
 app.use(express.json())
 app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:process.env.CLIENT_PORT,
     credentials:true
 }))
 app.use(cookieParser())
@@ -47,6 +47,6 @@ app.post("/api/images",upload.single("file"),(req,res)=>{
         res.status(200).json(file.filename);
 })
 
-app.listen(5000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log('listening');
 });

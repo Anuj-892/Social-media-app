@@ -5,7 +5,6 @@ import {
 } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 import Post from '../Post/Post';
-import CreatePost from '../createpost/CreatePost';
 
 function Posts({userId}) {
     const { isLoading, error, data } = useQuery({

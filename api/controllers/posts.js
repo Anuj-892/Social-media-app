@@ -20,7 +20,6 @@ const createPost = async (req,res)=>{
 
 const updatePost = async (req,res)=>{
     const {postId} = req.params;
-    console.log(postId,req.body.content,req.body.image);
     try{
         const q = "UPDATE posts SET content=?, image=?, createdAt=? WHERE ownerId=? AND pid=?;"
         const values = [
@@ -30,7 +29,6 @@ const updatePost = async (req,res)=>{
         req.userData.id,
         postId
         ];
-        console.log(values);
         await pool.query(q, values);
         res.status(200).json("Post has been edited");
     }

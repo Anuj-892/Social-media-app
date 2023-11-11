@@ -15,7 +15,7 @@ const navigate = useNavigate();
 const handleSubmit = async(e) => {
      e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login",login,{
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_PORT_URL}api/auth/login`,login,{
       withCredentials:true
     });
     setLogin({
@@ -39,12 +39,6 @@ const handleChange = (e) => {
   return (
     <div className="login">
     <div className='card'>
-      <div className="left">
-        <h1>Connect</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum eos cumque reiciendis eligendi! Expedita distinctio dolores recusandae? Laboriosam iusto eveniet numquam, veritatis inventore distinctio sequi. In recusandae inventore alias hic!</p>
-        <span>Don't have an account?<Link to={'/register'}>Sign Up</Link></span>
-      </div>
-      <div className="right">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email"></label>
@@ -54,7 +48,7 @@ const handleChange = (e) => {
           {err && err}
           <button className='btn btn-primary'>Login</button>
         </form>
-      </div>
+        <span>Don't have an account?<Link to={'/register'}>Sign Up</Link></span>
    </div>
 </div>
   )

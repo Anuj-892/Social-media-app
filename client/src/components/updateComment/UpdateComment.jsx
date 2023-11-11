@@ -10,17 +10,6 @@ import { makeRequest } from '../../axios';
 function UpdateComment({setUpdate,commentInfo}) {
   const [commentText, setCommentText] = useState(commentInfo.comment)
 
-// const upload = async()=>{
-//   try {
-//     const formData = new FormData();
-//     formData.append("file",updateData.file);
-//     const res = await makeRequest.post("/images",formData)
-//     return res.data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({  
@@ -34,8 +23,6 @@ function UpdateComment({setUpdate,commentInfo}) {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // let imgUrl= "";
-    // if(updateData.file) imgUrl= await upload();
     mutation.mutate({comment:commentText});
     setUpdate(false);
   }

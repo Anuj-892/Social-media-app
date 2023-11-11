@@ -14,7 +14,7 @@ function Comment({comment}) {
     <div className="comment">
        <div className='info'>
        {
-         comment.profilePic?<img src={comment.profilePic} alt="comment" />:
+         comment.profilePic?<img src={`${import.meta.env.VITE_SERVER_PORT_URL}uploads/${comment.profilePic}`} alt="comment" />:
          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="comment"/>       
         }        
         <div className="details">

@@ -17,16 +17,6 @@ const addLike = async (req,res)=>{
     }     
 }
 
-// const updateComment = async (req,res)=>{
-//     try{       
-//         const updatedComment=await Comment.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
-//         res.status(200).json(updatedComment)
-//     }
-//     catch(err){
-//         res.status(500).json(err)
-//     }
-// }
-
 const deleteLike = async (req,res)=>{
     const {postId} = req.params;
     try{
@@ -58,6 +48,5 @@ const getLikes = async (req,res)=>{
 module.exports = {
     getLikes,
     addLike,
-    // updateComment,
     deleteLike
 }

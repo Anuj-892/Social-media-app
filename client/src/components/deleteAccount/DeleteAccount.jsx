@@ -17,9 +17,9 @@ function DeleteAccount({setOpenDeleteModal,userId}) {
             return makeRequest.delete(`/users`)
         }, 
         onSuccess: () => {
-            queryClient.invalidateQueries("posts")
+            // queryClient.invalidateQueries("posts")
             setOpenDeleteModal(false);
-            navigate('/home',{replace:true})
+            navigate('/',{replace:true})
         },
     })
 

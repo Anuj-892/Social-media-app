@@ -12,7 +12,7 @@ app.use((req,res,next)=>{
 app.use(express.json())
 app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
 app.use(cors({
-    origin:process.env.CLIENT_PORT,
+    origin:`${process.env.CLIENT_PORT}`,
     credentials:true
 }))
 app.use(cookieParser())

@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 import Post from '../Post/Post';
+import Loader from '../Loader/Loader';
 
 function Posts({userId}) {
     const { isLoading, error, data } = useQuery({
@@ -17,7 +18,7 @@ function Posts({userId}) {
     <div className="posts">
         {
           error?'Someting went wrong':
-          isLoading?"Loading...":
+          isLoading?<Loader/>:
          data.map(post=>{
             return <Post post={post} key={post.pid}/>
           })

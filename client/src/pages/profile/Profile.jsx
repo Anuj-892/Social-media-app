@@ -9,6 +9,7 @@ import {
 import './profile.scss'
 import {AiFillDelete} from 'react-icons/ai'
 import { makeRequest } from '../../axios';
+import Loader from '../../components/Loader/Loader'
 import Posts from '../../components/Posts/Posts';
 import UpdateAccount from '../../components/updateAccount/updateAccount'
 import DeleteAccount from '../../components/deleteAccount/DeleteAccount'
@@ -53,7 +54,7 @@ function Profile() {
   return (
     <>
       {
-        isLoading?"Loading...":
+        isLoading?<Loader/>:
         <div className='profile'>
       <div className="images">
        {
@@ -85,7 +86,7 @@ function Profile() {
         
         <br/>
         {(userId==user.uid) && <CreatePost/>}
-        <Posts userId={userId}/>   
+        <Posts userId={userId}/>  
       </div> 
     </div>
       }

@@ -41,6 +41,8 @@ const handleSubmit = async(e) => {
     imgUrl= await upload();
   }
   mutation.mutate({content:content,image:imgUrl});
+  setContent("")
+  setFile(null)
 }
 const handleChange = (e) => {
   const selectedFile = e.target.files[0];

@@ -1,6 +1,6 @@
 # CONNECT-Social Media Application
 
-# PROJECT-DEMO-video
+# PROJECT-DEMO-VIDEO
 https://github.com/Anuj-892/Social-media-app/assets/67644004/68a555be-b642-47f7-a1a5-5e6985204f8d
 
 # DB DESIGN
